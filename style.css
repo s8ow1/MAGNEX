@@ -1,0 +1,128 @@
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:#071827;color:#e4e9ed;font:14px Arial,Helvetica,sans-serif}
+
+/* ===== Whole-site 3D background =====
+   bgCanvas is fixed behind every section (z-index:-1). Panels below use
+   translucent / glass backgrounds so the 3D scene reads through the whole
+   page, not just the hero. */
+#bgCanvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:-1;display:block;pointer-events:none}
+
+.top{position:sticky;top:0;z-index:999;background:rgba(12,36,56,.86);backdrop-filter:blur(6px);border-bottom:1px solid #405566;padding:14px 5%;display:flex;align-items:center;gap:25px}
+.logo{color:#fff;text-decoration:none;min-width:180px}
+.logo b{font-size:22px;letter-spacing:2px}
+.logo small{display:block;color:#9eabb5;font-size:8px;margin-top:3px}
+nav{display:flex;gap:20px;flex:1;justify-content:center}
+nav a{color:#c2cad1;text-decoration:none;font-size:13px}
+nav a:hover{color:white}
+.ministry{text-align:right;color:#aab5bd;font-size:8px;line-height:1.5}
+.section{max-width:1250px;margin:auto;padding:70px 6%;position:relative;z-index:1}
+
+/* Hero no longer carries its own canvas or photo background — the global
+   3D scene (bgCanvas) shows straight through; a light gradient keeps the
+   headline text readable over it. */
+.hero{position:relative;max-width:none;min-height:580px;padding-left:10%;display:flex;align-items:center;background:linear-gradient(rgba(7,24,39,.45),rgba(7,24,39,.72))}
+.hero div{max-width:760px;position:relative;z-index:1}
+.eyebrow,.label{font-size:10px;letter-spacing:1.5px;color:#aab6bf}
+.hero h1{font-size:clamp(45px,7vw,78px);line-height:1;margin:14px 0}
+.hero h1 span,h2 span{color:#aeb9c2}
+.hero p{max-width:700px;color:#b2bdc5;line-height:1.8}
+.btn{display:inline-block;margin:18px 8px 0 0;padding:11px 17px;border-radius:3px;text-decoration:none;font-weight:bold;font-size:12px}
+.btn1{background:#d6dce0;color:#122638}
+.btn2{border:1px solid #637382;color:#d6dce0}
+.note{font-size:10px;color:#82919c;margin-top:15px}
+.head{margin-bottom:30px}
+.head h2{font-size:38px;margin:8px 0}
+.head p{color:#99a7b1}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card,.controls,.metric,.data,.chart,.method,.about{background:rgba(12,33,51,.82);backdrop-filter:blur(4px);border:1px solid #344c5d;border-radius:4px}
+.card{padding:22px}
+.card h3{margin-top:0}
+.card p,.method p,.about p{color:#9ba9b3;line-height:1.7}
+.mapgrid{display:grid;grid-template-columns:280px 1fr;gap:15px}
+.controls{padding:18px}
+.control{margin-bottom:15px}
+.control label,.analytics label{display:block;font-size:9px;color:#98a6b0;letter-spacing:1px;margin-bottom:6px}
+.select{width:100%;padding:10px;background:rgba(7,24,39,.9);color:#e4e9ed;border:1px solid #506474;border-radius:3px}
+.select:disabled{opacity:.45}
+.explore{width:100%;padding:10px;background:rgba(20,45,66,.9);color:#e0e6ea;border:1px solid #657786;border-radius:3px;cursor:pointer}
+.explore.active{background:#d5dce0;color:#122638}
+.hint{font-size:10px;color:#7f919e}
+.mapbox{position:relative;border:1px solid #344c5d;border-radius:4px;overflow:hidden}
+.map{height:520px}
+.legend{position:absolute;z-index:500;bottom:12px;right:12px;background:#091827eF;border:1px solid #4a5d6c;padding:10px;font-size:9px}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-left:8px}
+.green{background:#619477}
+.yellow{background:#a9945a}
+.blue{background:#627b90}
+.result{margin-top:15px;padding:13px;background:rgba(8,23,37,.88);border:1px solid #344c5d}
+.result.hide{display:none}
+.result h3{margin:0 0 8px;font-size:14px}
+.row{display:flex;justify-content:space-between;border-top:1px solid #263c4b;padding:6px 0;font-size:11px}
+.analytics{background:transparent}
+.filters{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:16px;margin-bottom:16px}
+.filters,.metric,.data,.chart{background:rgba(12,33,51,.82);backdrop-filter:blur(4px);border:1px solid #344c5d;border-radius:4px}
+.metricgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.metric{padding:18px}
+.metric small,.data small{display:block;color:#8495a1;font-size:9px}
+.metric strong{display:block;font-size:24px;margin:6px 0}
+.metric span{font-size:9px;color:#788b98}
+.datagrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:15px}
+.data{padding:16px}
+.data strong{display:block;font-size:19px;margin-top:5px}
+.chart{padding:20px;margin-top:15px}
+.bars{height:200px;display:flex;align-items:end;gap:15px;padding:0 8%;border-bottom:1px solid #3a4f5d}
+.bars div{flex:1;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar{height:var(--h);width:100%;max-width:42px;margin:auto auto 0;background:linear-gradient(#7fa0b3,#687d8c);border-radius:3px 3px 0 0;transition:height .5s ease}
+.barval{display:block;color:#c6d1d8;font-size:10px;margin-top:5px}
+.bars small{display:block;color:#80909b;margin-top:2px}
+.methods{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.method{padding:20px}
+.method b{color:#aeb9c2}
+.method h3{margin:7px 0}
+.about{padding:35px;max-width:800px}
+.about h2{font-size:40px}
+footer{position:relative;z-index:1;text-align:center;padding:22px;border-top:1px solid #344c5d;background:rgba(7,24,39,.75);color:#70818e;font-size:9px}
+@media(max-width:850px){.top{flex-wrap:wrap}.ministry{display:none}nav{order:3;width:100%;overflow:auto;justify-content:flex-start}.cards,.methods,.metricgrid,.datagrid{grid-template-columns:1fr}.mapgrid{grid-template-columns:1fr}.filters{grid-template-columns:1fr}.hero{padding-left:6%;min-height:520px}}
+
+/* ===== Hero live indicator ===== */
+.livebar{display:flex;align-items:center;gap:8px;margin-top:22px;font-size:10px;color:#9db0bd;letter-spacing:.5px}
+.livedot{width:7px;height:7px;border-radius:50%;background:#5fb98c;box-shadow:0 0 0 0 rgba(95,185,140,.6);animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(95,185,140,.55)}70%{box-shadow:0 0 0 8px rgba(95,185,140,0)}100%{box-shadow:0 0 0 0 rgba(95,185,140,0)}}
+@media(prefers-reduced-motion:reduce){.livedot{animation:none}}
+
+/* ===== Satellite / basemap toggle ===== */
+.layerToggle{display:flex;gap:8px;margin-bottom:10px}
+.layerbtn{flex:1;padding:9px 10px;background:rgba(12,33,51,.9);color:#c2cad1;border:1px solid #344c5d;border-radius:3px;cursor:pointer;font-size:11px;letter-spacing:.3px}
+.layerbtn.active{background:#3c5f4c;border-color:#5fb98c;color:#eaf3ee}
+.layerbtn small{display:block;color:#8495a1;font-size:9px;margin-top:2px}
+.layerbtn.active small{color:#cfe3d7}
+
+/* ===== AI agent widget ===== */
+#magnexAgent{position:fixed;right:22px;bottom:22px;z-index:1200;font-family:Arial,Helvetica,sans-serif}
+.agent-toggle{display:flex;align-items:center;gap:8px;padding:12px 16px;background:rgba(12,36,56,.92);border:1px solid #4a6478;color:#e4e9ed;border-radius:30px;cursor:pointer;font-size:12px;font-weight:bold;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.agent-toggle:hover{border-color:#5fb98c}
+.agent-dot{width:8px;height:8px;border-radius:50%;background:#5fb98c;box-shadow:0 0 0 0 rgba(95,185,140,.6);animation:pulse 2.2s infinite}
+.agent-panel{position:fixed;right:22px;bottom:88px;width:340px;max-width:88vw;height:460px;max-height:70vh;background:rgba(12,33,51,.94);backdrop-filter:blur(8px);border:1px solid #344c5d;border-radius:8px;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.5);overflow:hidden}
+.agent-panel.hide{display:none}
+.agent-head{display:flex;align-items:flex-start;justify-content:space-between;padding:12px 14px;border-bottom:1px solid #344c5d;background:rgba(12,36,56,.92)}
+.agent-head b{display:block;font-size:13px}
+.agent-head small{display:block;color:#8ea0ac;font-size:10px;margin-top:2px}
+.agent-head button{background:none;border:none;color:#c2cad1;font-size:18px;cursor:pointer;line-height:1}
+.agent-log{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+.agent-msg{display:flex;flex-direction:column;max-width:92%}
+.agent-msg.user{align-self:flex-end;align-items:flex-end}
+.agent-msg.agent{align-self:flex-start;align-items:flex-start}
+.agent-bubble{padding:9px 11px;border-radius:8px;font-size:12px;line-height:1.55}
+.agent-msg.user .agent-bubble{background:#3c5f4c;color:#eaf3ee;border-bottom-right-radius:2px}
+.agent-msg.agent .agent-bubble{background:#142d42;color:#dfe6ea;border-bottom-left-radius:2px}
+.agent-conf{margin-top:4px;font-size:9px;color:#8ea0ac;letter-spacing:.3px}
+.agent-chips{display:flex;gap:6px;padding:0 12px 10px;flex-wrap:wrap}
+.chip{background:#0c2438;border:1px solid #3d5468;color:#b7c3cb;font-size:10px;padding:6px 9px;border-radius:20px;cursor:pointer}
+.chip:hover{border-color:#5fb98c}
+.agent-form{display:flex;border-top:1px solid #344c5d}
+.agent-form input{flex:1;background:#081725;border:none;color:#e4e9ed;padding:11px 12px;font-size:12px}
+.agent-form input:focus{outline:none}
+.agent-form button{background:#5fb98c;color:#08221a;border:none;padding:0 16px;font-weight:bold;font-size:12px;cursor:pointer}
+.agent-form button:disabled{opacity:.5;cursor:default}
+.agent-typing{font-size:10px;color:#8ea0ac;padding:0 12px 8px}
+@media(max-width:600px){.agent-panel{right:12px;bottom:80px;width:calc(100vw - 24px)}#magnexAgent{right:12px;bottom:12px}}

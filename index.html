@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MAGNEX | Manganese Exploration</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Full-page 3D background: fixed behind every section, rendered by hero3d.js -->
+<canvas id="bgCanvas"></canvas>
+
+<header class="top">
+<a class="logo" href="#home"><b>MAGNEX</b><small>PREDICT BEFORE YOU DRILL</small></a>
+<nav><a href="#home">Home</a><a href="#explore">Explore Map</a><a href="#analytics">Analytics</a><a href="#methodology">Methodology</a><a href="#about">About</a></nav>
+<div class="ministry">SMART INDIA HACKATHON<br>MINISTRY OF STEEL</div>
+</header>
+
+<section id="home" class="hero">
+<div><div class="eyebrow">AI/ML • GIS • REMOTE SENSING</div><h1>PREDICT BEFORE<br><span>YOU DRILL.</span></h1>
+<p>MAGNEX is a decision-support concept for manganese exploration, combining satellite remote sensing, GIS and AI/ML to help identify promising areas before conventional drilling, saving a lot of time, energy and cost.</p>
+<a class="btn btn1" href="#explore">Explore Prospectivity</a><a class="btn btn2" href="#methodology">How it works</a>
+<div class="note">Faster exploration • Data-guided decisions • More responsible field planning</div>
+<div class="livebar"><span class="livedot"></span> 21 sites tracked across 7 manganese-producing states of India — ask the MAGNEX agent, bottom right</div>
+</div>
+</section>
+
+<section class="section"><div class="head"><div class="label">01 / PURPOSE</div><h2>Smarter exploration with <span>spatial intelligence.</span></h2><p>MAGNEX brings remote sensing, GIS and machine learning into one simple exploration interface.</p></div>
+<div class="cards"><article class="card"><h3>Remote Sensing</h3><p>Multispectral satellite imagery provides repeated observations of surface characteristics across large areas.</p></article><article class="card"><h3>GIS Analysis</h3><p>Geological and geographic layers can be combined to understand spatial relationships and patterns.</p></article><article class="card"><h3>AI / ML</h3><p>Selected indicators and known occurrence data can be used to estimate prospectivity for target areas.</p></article></div></section>
+
+<section id="explore" class="section"><div class="head"><div class="label">02 / EXPLORE MAP</div><h2>India <span>Prospectivity Map</span></h2><p>Select State → District → Site, switch to real satellite imagery, or explore a new location by placing a pin. Covers all major manganese-ore producing states in India.</p></div>
+<div class="mapgrid"><aside class="controls">
+<div class="layerToggle">
+<button class="layerbtn active" data-layer="street">Map<small>OpenStreetMap</small></button>
+<button class="layerbtn" data-layer="satellite">Satellite<small>Esri World Imagery</small></button>
+</div>
+<div class="control"><label>SELECT STATE</label><select id="ms" class="select"><option value="">Choose state</option><option value="mp">Madhya Pradesh</option><option value="od">Odisha</option><option value="mh">Maharashtra</option><option value="ka">Karnataka</option><option value="ap">Andhra Pradesh</option><option value="jh">Jharkhand</option><option value="gj">Gujarat</option></select></div>
+<div class="control"><label>SELECT DISTRICT</label><select id="md" class="select" disabled><option value="">Choose district</option></select></div>
+<div class="control"><label>SELECT SITE</label><select id="msite" class="select" disabled><option value="">Choose site</option></select></div>
+<button id="exploreBtn" class="explore">＋ Explore any location</button><p id="hint" class="hint">Choose a site or turn on Explore Mode.</p>
+<div id="mresult" class="result hide"></div></aside>
+<div class="mapbox"><div id="map" class="map"></div><div class="legend">PROSPECTIVITY<br><i class="green"></i>High <i class="yellow"></i>Medium <i class="blue"></i>Low</div></div></div></section>
+
+<section id="analytics" class="section"><div class="head"><div class="label">03 / ANALYTICS</div><h2>Site <span>Analytics</span></h2><p>Choose a study site to view its exploration and production indicators.</p></div>
+<div class="filters analytics"><div><label>SELECT STATE</label><select id="as" class="select"><option value="">Choose state</option><option value="mp">Madhya Pradesh</option><option value="od">Odisha</option><option value="mh">Maharashtra</option><option value="ka">Karnataka</option><option value="ap">Andhra Pradesh</option><option value="jh">Jharkhand</option><option value="gj">Gujarat</option></select></div><div><label>SELECT DISTRICT</label><select id="ad" class="select" disabled><option value="">Choose district</option></select></div><div><label>SELECT SITE</label><select id="asite" class="select" disabled><option value="">Choose site</option></select></div></div>
+<div class="metricgrid"><div class="metric"><small>SELECTED SITE</small><strong id="name">Balaghat Site 01</strong><span id="loc">Balaghat, Madhya Pradesh</span></div><div class="metric"><small>MANGANESE PROSPECTIVITY</small><strong id="prob">78.4%</strong><span>Sample value</span></div><div class="metric"><small>MODEL CONFIDENCE</small><strong id="conf">91%</strong><span>Sample value</span></div><div class="metric"><small>DAILY PRODUCTION</small><strong id="prod">2,450 t</strong><span>Sample value</span></div></div>
+<div class="datagrid"><div class="data"><small>DOMINANT ORE TYPE</small><strong id="ore">Manganese ore</strong></div><div class="data"><small>IRON OXIDE INDEX</small><strong id="iron">0.68</strong></div><div class="data"><small>LITHOLOGY SCORE</small><strong id="lith">0.84</strong></div><div class="data"><small>DRAINAGE DENSITY</small><strong id="drain">1.72 km/km²</strong></div><div class="data"><small>LINEAMENT DENSITY</small><strong id="line">0.61</strong></div><div class="data"><small>NDVI</small><strong id="ndvi">0.31</strong></div><div class="data"><small>SWIR RESPONSE</small><strong id="swir">0.57</strong></div><div class="data"><small>PROSPECTIVITY CLASS</small><strong id="pclass">HIGH</strong></div><div class="data"><small>PRODUCTION GAP</small><strong id="gap">550 t/day</strong></div></div>
+<div class="chart" id="weeklyChart"><b>Illustrative weekly production</b>
+<div class="bars">
+<div><div class="bar" style="--h:55%"></div><span class="barval">0</span><small>Mon</small></div>
+<div><div class="bar" style="--h:68%"></div><span class="barval">0</span><small>Tue</small></div>
+<div><div class="bar" style="--h:61%"></div><span class="barval">0</span><small>Wed</small></div>
+<div><div class="bar" style="--h:78%"></div><span class="barval">0</span><small>Thu</small></div>
+<div><div class="bar" style="--h:71%"></div><span class="barval">0</span><small>Fri</small></div>
+<div><div class="bar" style="--h:84%"></div><span class="barval">0</span><small>Sat</small></div>
+<div><div class="bar" style="--h:76%"></div><span class="barval">0</span><small>Sun</small></div>
+</div>
+<p id="chartCaption" style="font-size:10px;color:#71828e">Generated from the selected site's daily production baseline. All numerical values shown here are sample placeholders for the prototype and should be replaced with validated project data.</p></div>
+</section>
+
+<section id="methodology" class="section"><div class="head"><div class="label">04 / METHODOLOGY</div><h2>How <span>MAGNEX</span> works</h2></div><div class="methods">
+<div class="method"><b>01</b><h3>Satellite Data</h3><p>Acquire suitable multispectral imagery for the study area.</p></div><div class="method"><b>02</b><h3>Pre-processing</h3><p>Filter clouds and prepare imagery for consistent analysis.</p></div><div class="method"><b>03</b><h3>Feature Extraction</h3><p>Derive relevant spectral and spatial indicators.</p></div><div class="method"><b>04</b><h3>GIS Integration</h3><p>Combine geological and geographic layers in a common framework.</p></div><div class="method"><b>05</b><h3>AI / ML Model</h3><p>Use training data and selected features to estimate prospectivity.</p></div><div class="method"><b>06</b><h3>Prospectivity Map</h3><p>Present model output as mapped zones for exploration prioritisation.</p></div><div class="method"><b>07</b><h3>Why MAGNEX is the need of Future</h3><p>Traditional manganese exploration relies on labour-intensive ground expeditions and speculative drilling campaigns that consume months, drain capital, and disturb fragile ecosystems. By integrating remote sensing and GIS analytics, MAGNEX replaces guesswork with data-driven precision, saving a lot of time, energy and most importantly our environment.</p></div></div>
+<div class="card" style="margin-top:15px"><h3>Accuracy and validation</h3><p>Results depend on satellite-data quality, geological and occurrence data, feature selection, model validation and field verification. Google Earth Engine can support large-scale satellite processing while GIS provides the spatial framework.</p></div></section>
+
+<section id="about" class="section"><div class="about"><div class="label">05 / ABOUT MAGNEX</div><h2>Smarter exploration.<br><span>Better decisions.</span></h2><p>MAGNEX is a student-led Smart India Hackathon concept focused on using space technology, GIS and AI/ML to support more targeted manganese exploration — saving time, energy, cost and, most importantly, protecting nature.</p><p>Prototype developed for demonstration and further technical validation.</p></div></section>
+<footer>MAGNEX • Predict Before You Drill • Smart India Hackathon Prototype</footer>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+<script src="script.js"></script>
+<script src="hero3d.js"></script>
+<script src="agent.js"></script>
+</body>
+</html>
