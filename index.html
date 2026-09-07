@@ -48,14 +48,26 @@
 <div class="datagrid"><div class="data"><small>DOMINANT ORE TYPE</small><strong id="ore">Manganese ore</strong></div><div class="data"><small>IRON OXIDE INDEX</small><strong id="iron">0.68</strong></div><div class="data"><small>LITHOLOGY SCORE</small><strong id="lith">0.84</strong></div><div class="data"><small>DRAINAGE DENSITY</small><strong id="drain">1.72 km/km²</strong></div><div class="data"><small>LINEAMENT DENSITY</small><strong id="line">0.61</strong></div><div class="data"><small>NDVI</small><strong id="ndvi">0.31</strong></div><div class="data"><small>SWIR RESPONSE</small><strong id="swir">0.57</strong></div><div class="data"><small>PROSPECTIVITY CLASS</small><strong id="pclass">HIGH</strong></div><div class="data"><small>PRODUCTION GAP</small><strong id="gap">550 t/day</strong></div></div>
 <div class="chart" id="weeklyChart"><b>Illustrative weekly production</b>
 <div class="bars">
-<div><div class="bar" style="--h:55%"></div><span class="barval">0</span><small>Mon</small></div>
-<div><div class="bar" style="--h:68%"></div><span class="barval">0</span><small>Tue</small></div>
-<div><div class="bar" style="--h:61%"></div><span class="barval">0</span><small>Wed</small></div>
-<div><div class="bar" style="--h:78%"></div><span class="barval">0</span><small>Thu</small></div>
-<div><div class="bar" style="--h:71%"></div><span class="barval">0</span><small>Fri</small></div>
-<div><div class="bar" style="--h:84%"></div><span class="barval">0</span><small>Sat</small></div>
-<div><div class="bar" style="--h:76%"></div><span class="barval">0</span><small>Sun</small></div>
+  <div><div class="bar" data-value="20"></div><span class="barval">20</span><small>Mon</small></div>
+  <div><div class="bar" data-value="35"></div><span class="barval">35</span><small>Tue</small></div>
+  <div><div class="bar" data-value="25"></div><span class="barval">25</span><small>Wed</small></div>
+  <div><div class="bar" data-value="50"></div><span class="barval">50</span><small>Thu</small></div>
+  <div><div class="bar" data-value="40"></div><span class="barval">40</span><small>Fri</small></div>
+  <div><div class="bar" data-value="60"></div><span class="barval">60</span><small>Sat</small></div>
+  <div><div class="bar" data-value="45"></div><span class="barval">45</span><small>Sun</small></div>
 </div>
+
+<script>
+const bars = document.querySelectorAll('.bar');
+const values = [...bars].map(bar => Number(bar.dataset.value));
+const max = Math.max(...values);
+
+bars.forEach(bar => {
+  const value = Number(bar.dataset.value);
+  const height = max === 0 ? 0 : (value / max) * 100;
+  bar.style.setProperty('--h', `${height}%`);
+});
+</script>
 <p id="chartCaption" style="font-size:10px;color:#71828e">Generated from the selected site's daily production baseline. All numerical values shown here are sample placeholders for the prototype and should be replaced with validated project data.</p></div>
 </section>
 
